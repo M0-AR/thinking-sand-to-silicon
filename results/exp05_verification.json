@@ -1,0 +1,41 @@
+{
+  "nominal_bringup": {
+    "ok": true,
+    "log": [
+      "OK: clock clean, reset released",
+      "OK: Pico loader streams 1024 double-slots via 8-bit parallel IF",
+      "OK: GPIO toggle pattern observed (first silicon proof)",
+      "OK: counter 0..100 halts (ALU+CMP+BR+JMP+SRAM+PC proven)",
+      "KNOWN-FAIL: SPI dead on silicon (admitted, missing-test root cause)",
+      "KNOWN-FAIL: UART half-broken, salvageable (admitted)"
+    ]
+  },
+  "ground_fault_repro": {
+    "ok": false,
+    "log": [
+      "FAIL: extra clocks counted (ground bounce across breadboards) -> add ground jumpers",
+      "OK: Pico loader streams 1024 double-slots via 8-bit parallel IF",
+      "OK: GPIO toggle pattern observed (first silicon proof)",
+      "OK: counter 0..100 halts (ALU+CMP+BR+JMP+SRAM+PC proven)"
+    ],
+    "lesson": "Analog hygiene (grounds) mimics digital timing failure; creator's fix (more jumpers) is textbook."
+  },
+  "coverage_model": {
+    "cocotb_unit_tests_small_chunks": 0.85,
+    "fpga_prototyping_not_done": 0.0,
+    "interface_tests_spi_uart": 0.1,
+    "overall_escape_risk": "medium: core proven, interfaces escaped (matches silicon reality)"
+  },
+  "bug_taxonomy": [
+    "MAC unpipelined -> timing/area (design bug, exp02).",
+    "SPI dead / UART broken -> missing interface tests (verification gap, admitted).",
+    "Extra-clock mystery -> grounding, not silicon (bring-up hygiene)."
+  ],
+  "claims_verified": [
+    "cocotb+Verilator assertion method described correctly.",
+    "FPGA-vs-ASIC SRAM/timing caveat stated correctly.",
+    "'Single clock domain => tests catch most' is reasonable but incomplete: interfaces escaped.",
+    "Counter-to-100 proves bootloader+SRAM+PC+ALU+branch (correct deduction).",
+    "COB epoxy + Pico + breadboard bring-up chain plausible and evidenced."
+  ]
+}

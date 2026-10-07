@@ -1,0 +1,12 @@
+services:
+  research:
+    build: .
+    volumes:
+      - ./results:/work/results
+      - ./data:/work/data
+    command: bash -c "make all && pytest -q"
+  paper:
+    build: .
+    volumes:
+      - ./:/work
+    command: bash -c "make all && ls -lh results/ data/"

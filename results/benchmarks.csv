@@ -1,0 +1,15 @@
+exp,metric,value,source
+01,total_moves_1024x2,2048,exp01
+01,tta_add_cycles_2bus,2,exp01
+01,tta_add_moves,3,exp01
+02,mac_3stage_mid_ns,15.0,exp02 model
+02,mac_comb_hi_ns,52.0,exp02 model slow corner
+02,period_20MHz_ns,50.0,exp02
+03,drc_share_pct,36.8,exp03 model
+03,flow_stages,13,exp03
+04,GFS_price_usd,47.59,live 2026-10-07
+04,GF_mcap_usd,26527551488,live 2026-10-07
+04,btap_target_mhz,20,video
+04,run1_best_core_cells_mm2,22000,wafer.space density report
+04,waferspace_dies_per_slot,1000,wafer.space
+05,nominal_bringup_ok,1,exp05

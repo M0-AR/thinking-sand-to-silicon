@@ -1,0 +1,89 @@
+{
+  "model": {
+    "gate_ns_180nm": 0.35,
+    "period_20MHz_ns": 50.0,
+    "period_18MHz_ns": 55.56,
+    "margin_ns": 2.0
+  },
+  "rows": [
+    {
+      "circuit": "dot_product_4tap_comb",
+      "delay_lo_ns": 12.0,
+      "delay_mid_ns": 15.0,
+      "delay_hi_ns": 18.0,
+      "period_20MHz_ns": 50.0,
+      "closes_20MHz_typ": true,
+      "closes_20MHz_slow": true,
+      "closes_18MHz_slow": true,
+      "latency_cycles": 1,
+      "throughput_per_cycle": 1.0
+    },
+    {
+      "circuit": "mac32_comb_mult_only",
+      "delay_lo_ns": 30.0,
+      "delay_mid_ns": 35.0,
+      "delay_hi_ns": 40.0,
+      "period_20MHz_ns": 50.0,
+      "closes_20MHz_typ": true,
+      "closes_20MHz_slow": true,
+      "closes_18MHz_slow": true,
+      "latency_cycles": 1,
+      "throughput_per_cycle": 1.0
+    },
+    {
+      "circuit": "mac32_comb_mult_plus_acc",
+      "delay_lo_ns": 38.0,
+      "delay_mid_ns": 45.0,
+      "delay_hi_ns": 52.0,
+      "period_20MHz_ns": 50.0,
+      "closes_20MHz_typ": true,
+      "closes_20MHz_slow": false,
+      "closes_18MHz_slow": true,
+      "latency_cycles": 1,
+      "throughput_per_cycle": 1.0
+    },
+    {
+      "circuit": "mac32_pipelined_2stage",
+      "delay_lo_ns": 19.12,
+      "delay_mid_ns": 22.5,
+      "delay_hi_ns": 28.12,
+      "period_20MHz_ns": 50.0,
+      "closes_20MHz_typ": true,
+      "closes_20MHz_slow": true,
+      "closes_18MHz_slow": true,
+      "latency_cycles": 2,
+      "throughput_per_cycle": 1.0
+    },
+    {
+      "circuit": "mac32_pipelined_3stage",
+      "delay_lo_ns": 12.75,
+      "delay_mid_ns": 15.0,
+      "delay_hi_ns": 18.75,
+      "period_20MHz_ns": 50.0,
+      "closes_20MHz_typ": true,
+      "closes_20MHz_slow": true,
+      "closes_18MHz_slow": true,
+      "latency_cycles": 3,
+      "throughput_per_cycle": 1.0
+    },
+    {
+      "circuit": "mac32_pipelined_4stage",
+      "delay_lo_ns": 9.56,
+      "delay_mid_ns": 11.25,
+      "delay_hi_ns": 14.06,
+      "period_20MHz_ns": 50.0,
+      "closes_20MHz_typ": true,
+      "closes_20MHz_slow": true,
+      "closes_18MHz_slow": true,
+      "latency_cycles": 4,
+      "throughput_per_cycle": 1.0
+    }
+  ],
+  "hidden_pattern": "Unpipelined 32-bit MAC is the single critical path: ~45-52ns typical, >50ns slow => setup violation at 20MHz. This exactly reproduces the creator's 'struggled to hit target clock, giant MAC block, timing problems' confession. Fix is textbook: Spade pipeline(3) with 2 reg stages -> ~15-17ns/stage, closes with >30ns slack; latency 3, throughput still 1/cycle. Beginners optimize last; experts pipeline first.",
+  "claims_verified": [
+    "Combinational dot-product animation claim reproduces: activity must settle in one period.",
+    "Setup-violation definition correct (T_comb > T_clk).",
+    "Pipelining latency/throughput trade (3 cycles latency, 1/cycle steady) correct.",
+    "Video self-diagnosis (MAC caused miss) is quantitatively plausible on GF180."
+  ]
+}

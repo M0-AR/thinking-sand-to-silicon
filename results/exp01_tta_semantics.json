@@ -1,0 +1,58 @@
+{
+  "btap": {
+    "buses": 2,
+    "moves_per_cycle": 2,
+    "program_slots": 1024,
+    "moves_per_slot": 2,
+    "total_moves": 2048,
+    "clock_mhz": [
+      18,
+      20
+    ],
+    "functional_units": [
+      20,
+      30
+    ],
+    "opcodes": 80
+  },
+  "risc_add": {
+    "instructions": 1,
+    "cycles_ideal": 1,
+    "rf_reads": 2,
+    "rf_writes": 1
+  },
+  "tta_add": {
+    "moves": 3,
+    "issue_cycles": 2,
+    "result_latency": 1,
+    "rf_reads": 2,
+    "rf_writes": 1
+  },
+  "risc_mac_chain": {
+    "rf_reads": 4,
+    "rf_writes": 2,
+    "instructions": 2
+  },
+  "tta_mac_chain_bypass": {
+    "moves": 5,
+    "issue_cycles": 3,
+    "rf_reads": 3,
+    "rf_writes": 1,
+    "saved_rf_accesses": 2
+  },
+  "program_capacity": {
+    "total_moves": 2048,
+    "effective_ops_at_3_moves": 682
+  },
+  "throughput_at_20MHz": {
+    "moves_per_sec": 40000000.0,
+    "adds_per_sec_3move_equiv": 13333333.333333334
+  },
+  "claims_verified": [
+    "TTA ADD costs 3 moves vs 1 RISC instr (video correct).",
+    "2 buses -> 2 moves/cycle -> ADD issues in 2 cycles; superscalar label technically correct (2 IPC moves).",
+    "Exposed bypass saves >=2 RF accesses on chained MAC (literature + video agree).",
+    "1024 double-slots = 2048 moves ~= 682 3-move ops max (video says 2048 instructions; consistent).",
+    "Compiler owns scheduling/hazards/delay-slots; no HW interlock (video + Wikipedia + OpenASIP agree)."
+  ]
+}

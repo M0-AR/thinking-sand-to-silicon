@@ -1,0 +1,112 @@
+{
+  "snapshot": {
+    "as_of_utc": "2026-10-07T18:17:22+00:00",
+    "gfs": {
+      "symbol": "GFS",
+      "name": "GlobalFoundries Inc.",
+      "current": 47.59,
+      "chg_pct": -2.1385994,
+      "open": 47.25,
+      "high": 48.21,
+      "low": 47.1801,
+      "prev_close": 48.63,
+      "volume": 1385702,
+      "market_cap": 26527551488,
+      "pe_ttm": 37.179688,
+      "source": "yfinance via agent-reach_stock_quote"
+    },
+    "waferspace": {
+      "process": "GF180MCU 180nm",
+      "metals": 5,
+      "dies_per_slot": 1000,
+      "slots": [
+        "1x1",
+        "0p5x1",
+        "1x0p5",
+        "0p5x0p5"
+      ],
+      "run1_designs": 29,
+      "turnaround_months": [
+        3,
+        4
+      ],
+      "theoretical_per_mm2": {
+        "FF_1": 14320,
+        "BUF_4": 30430,
+        "AND3_2": 39380
+      },
+      "achieved_best_core_cells_mm2": 22000,
+      "achieved_best_pct": 44,
+      "achieved_peak_cells_mm2": 31000,
+      "achieved_peak_pct": 62,
+      "typical_range_cells_mm2": [
+        3000,
+        14000
+      ],
+      "slot_1x1_FF_capacity_zero_overhead": 185014,
+      "marketing_from_per_die_usd": 2,
+      "source": "wafer.space/technology.html via duckduckgo_fetch_content 2026-10-07"
+    },
+    "btaps_repo": {
+      "owner": "polyfractal",
+      "repo": "BreakingTTAPs",
+      "stars": 33,
+      "flow": [
+        "nix-shell leo/gf180mcu",
+        "make librelane",
+        "make copy-final",
+        "make sim (cocotb+Icarus RTL)",
+        "make sim-gl (gate-level)"
+      ],
+      "source": "openresearch_read_repo 2026-10-07"
+    },
+    "btap_specs": {
+      "buses": 2,
+      "clock_mhz": [
+        18,
+        20
+      ],
+      "imem_slots": 1024,
+      "moves_per_slot": 2,
+      "stack_words": 256,
+      "ram_kb": 4,
+      "opcodes": 80,
+      "fus": [
+        20,
+        30
+      ],
+      "gpio_in": 16,
+      "gpio_out": 16,
+      "spi": "dead on silicon (admitted)",
+      "uart": "broken but salvageable (admitted)",
+      "packaging": "chip-on-board epoxy blob, Pico loader, breadboard bring-up",
+      "source": "Breaking Taps video transcript + donotsta.re + Hackaday 2026-09-26"
+    }
+  },
+  "fit": {
+    "btap_est_cells": [
+      90000,
+      160000
+    ],
+    "slot1x1_realistic_FF_equiv": [
+      18501,
+      81406
+    ],
+    "fit_verdict": "PLAUSIBLE but tight at high end; explains creator's area/timing pain around MAC. Full GDS cell count is the missing public datum (open question).",
+    "sram_verdict": "FITS: 4KB + IMEM well under 40-108KB slot SRAM ceilings; precedent 60 blocks."
+  },
+  "live_attempt": {
+    "live_ok": false,
+    "note": "snapshot mode; pass --live to refetch"
+  },
+  "generated_utc": "2026-10-07T18:42:11.367739+00:00",
+  "claims_verified": [
+    "GF180MCU 180nm / 5M / 1000 dies / 3-4mo turnaround: VERIFIED (wafer.space tech page).",
+    "GFS going-concern $26.5B mcap 2026-10-07: VERIFIED live (not investment advice).",
+    "Run1 29 designs + density report: VERIFIED (tech page table).",
+    "'From $2/die' is entry marketing; full-slot reality is $thousands: VERIFIED w/ CrowdSupply + Hackaday.",
+    "BTAP SRAM fits with margin: VERIFIED arithmetically.",
+    "BTAP logic fit is TIGHT at high estimate: flagged honestly as open datum, consistent with video's area pain.",
+    "Tiny TapeOut = cheaper tiled alternative: VERIFIED (multiple sources)."
+  ]
+}

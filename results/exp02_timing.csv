@@ -1,0 +1,7 @@
+circuit,delay_lo_ns,delay_mid_ns,delay_hi_ns,period_20MHz_ns,closes_20MHz_typ,closes_20MHz_slow,closes_18MHz_slow,latency_cycles,throughput_per_cycle
+dot_product_4tap_comb,12.0,15.0,18.0,50.0,True,True,True,1,1.0
+mac32_comb_mult_only,30.0,35.0,40.0,50.0,True,True,True,1,1.0
+mac32_comb_mult_plus_acc,38.0,45.0,52.0,50.0,True,False,True,1,1.0
+mac32_pipelined_2stage,19.12,22.5,28.12,50.0,True,True,True,2,1.0
+mac32_pipelined_3stage,12.75,15.0,18.75,50.0,True,True,True,3,1.0
+mac32_pipelined_4stage,9.56,11.25,14.06,50.0,True,True,True,4,1.0

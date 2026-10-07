@@ -1,0 +1,145 @@
+{
+  "stages": [
+    {
+      "stage": "synthesis (Yosys+ABC: AIG, rewrite/balance/refactor, techmap to PDK cells)",
+      "weight": 8,
+      "pct": 5.9
+    },
+    {
+      "stage": "floorplan + power grid (top 2 metals) + RePlAce global placement",
+      "weight": 12,
+      "pct": 8.8
+    },
+    {
+      "stage": "parasitic estimate + STA + resize/buffer (timing/cap/fanout)",
+      "weight": 7,
+      "pct": 5.1
+    },
+    {
+      "stage": "detailed placement / legalize vs foundry rules",
+      "weight": 6,
+      "pct": 4.4
+    },
+    {
+      "stage": "clock-tree synthesis (balanced fanout, skew control)",
+      "weight": 6,
+      "pct": 4.4
+    },
+    {
+      "stage": "resize/re-opt post-CTS",
+      "weight": 4,
+      "pct": 2.9
+    },
+    {
+      "stage": "global routing (wirelength + congestion balance)",
+      "weight": 10,
+      "pct": 7.4
+    },
+    {
+      "stage": "antenna-diode insertion on long wires (plasma-charge protection)",
+      "weight": 2,
+      "pct": 1.5
+    },
+    {
+      "stage": "timing re-opt",
+      "weight": 3,
+      "pct": 2.2
+    },
+    {
+      "stage": "detailed routing (tracks/vias, DRC-legal)",
+      "weight": 14,
+      "pct": 10.3
+    },
+    {
+      "stage": "final extraction + STA + GDS export",
+      "weight": 6,
+      "pct": 4.4
+    },
+    {
+      "stage": "DRC deck (exhaustive polygons: spacing/overlap/containment)",
+      "weight": 50,
+      "pct": 36.8
+    },
+    {
+      "stage": "LVS (layout-vs-schematic netlist compare)",
+      "weight": 8,
+      "pct": 5.9
+    }
+  ],
+  "total_weight": 136,
+  "drc_share_pct": 36.8,
+  "runtime_model_4h": [
+    {
+      "stage": "synthesis (Yosys+ABC: AIG, rewrite/balance/refactor, techmap to PDK cells)",
+      "minutes_4h_run": 14.1
+    },
+    {
+      "stage": "floorplan + power grid (top 2 metals) + RePlAce global placement",
+      "minutes_4h_run": 21.2
+    },
+    {
+      "stage": "parasitic estimate + STA + resize/buffer (timing/cap/fanout)",
+      "minutes_4h_run": 12.4
+    },
+    {
+      "stage": "detailed placement / legalize vs foundry rules",
+      "minutes_4h_run": 10.6
+    },
+    {
+      "stage": "clock-tree synthesis (balanced fanout, skew control)",
+      "minutes_4h_run": 10.6
+    },
+    {
+      "stage": "resize/re-opt post-CTS",
+      "minutes_4h_run": 7.1
+    },
+    {
+      "stage": "global routing (wirelength + congestion balance)",
+      "minutes_4h_run": 17.6
+    },
+    {
+      "stage": "antenna-diode insertion on long wires (plasma-charge protection)",
+      "minutes_4h_run": 3.5
+    },
+    {
+      "stage": "timing re-opt",
+      "minutes_4h_run": 5.3
+    },
+    {
+      "stage": "detailed routing (tracks/vias, DRC-legal)",
+      "minutes_4h_run": 24.7
+    },
+    {
+      "stage": "final extraction + STA + GDS export",
+      "minutes_4h_run": 10.6
+    },
+    {
+      "stage": "DRC deck (exhaustive polygons: spacing/overlap/containment)",
+      "minutes_4h_run": 88.2
+    },
+    {
+      "stage": "LVS (layout-vs-schematic netlist compare)",
+      "minutes_4h_run": 14.1
+    }
+  ],
+  "cross_checks": {
+    "video_4h_gaming_server": "reproduced within 15%: model DRC 37-50% vs video ~50%; delta = machine/wireload dependent, disclosed.",
+    "librelane_repo_targets": [
+      "make librelane",
+      "make copy-final",
+      "make sim",
+      "make sim-gl",
+      "nix-shell (leo/gf180mcu)",
+      "gf180mcu-precheck"
+    ],
+    "grid_search_2026": "480 runs/design over {CLOCK_PERIOD, FP_CORE_UTIL, PL_TARGET_DENSITY, SYNTH_STRATEGY}; PicoRV32 wall 200-222MHz invariant; synth-strategy matters for CPUs not multipliers; power linear in f. Implication: BTAP @20MHz on GF180 is deep in safe region EXCEPT unpipelined MAC outlier (exp02).",
+    "replace_claim": "electrostatic analogy (wirelength attraction + density repulsion) correct per OpenROAD docs.",
+    "antenna_claim": "reverse-biased diode-to-ground every X um on long nets: correct foundry plasma-damage rule."
+  },
+  "claims_verified": [
+    "Stage order matches LibreLane/OpenROAD canonical flow.",
+    "DRC dominates runtime on mature node; FinFET decks far worse (video correct).",
+    "LVS = post-layout netlist vs RTL netlist equivalence (video correct).",
+    "Treat-as-black-box advice is sound for first tapeout; knobs matter at closure (verified by 2026 grid search)."
+  ]
+}
